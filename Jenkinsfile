@@ -1,38 +1,37 @@
-node {
-    def app
+pipeline {
+    agent any
 
-    stage('Clone repository') {
-      
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
-        checkout scm
-    }
-    
+        stage('Build') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
 
-    stage('Build image') {
-//         sh 'cp /var/lib/jenkins/workspace/api.js /var/lib/jenkins/workspace/nodejs/'
-  
-       app = docker.build("manishaverma/deployrepo")
-    }
-    
+        stage('Test') {
+            steps {
+                sh '/path/to/python -m pytest'
+            }
+        }
 
-
-    stage('Test image') {
-  
-
-        app.inside {
-            sh 'echo "Tests passed"'
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'docker build -t myapp .'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                }
+                sh 'docker tag myapp myuser/myapp:latest'
+                sh 'docker push myuser/myapp:latest'
+            }
         }
     }
-
-    stage('Push image') {
-        
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
-        }
-     }
-    stage('deploy'){
-        sh 'docker run -p 3000:5000 -e openai="${openai}" manishaverma/deployrepo:latest'
-    }
-
-
 }
