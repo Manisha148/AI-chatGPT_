@@ -27,7 +27,7 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                sh 'docker run -p 5000:5000 manishaverma/my-flask-app:latest'
+                sh 'docker run -p 8888:8888 manishaverma/my-flask-app:latest'
             }
         }
     }
