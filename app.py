@@ -5,7 +5,7 @@ import openai
 import os
 
 # openai.api_key = "sk-**********"
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+export OPENAI_API_KEY=<your_api_key>
 
 
 
