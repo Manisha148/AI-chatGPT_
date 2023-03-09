@@ -5,9 +5,9 @@ import openai
 import os
 
 # openai.api_key = "sk-**********"
-os.environ['OPENAI_API_KEY'] = '<your_api_key>'
+# os.environ['OPENAI_API_KEY'] = '<your_api_key>'
 
-
+openai.api_key_path = '/Apikey.txt'
 
 app = Flask(__name__)
 app.config["Debug"] = True
