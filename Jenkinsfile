@@ -9,9 +9,10 @@ pipeline {
         }
         
         stage('Test') {
-            app.inside {
-            sh 'echo "Tests passed"'
-        }
+            
+            steps {
+                sh 'echo "Tests passed"'
+            }
         }
         
         stage('Push to Docker Hub') {
