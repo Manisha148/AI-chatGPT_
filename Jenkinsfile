@@ -27,7 +27,8 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                sh 'docker run -p 8888:8888 manishaverma/my-flask-app:latest'
+                sh 'docker run -p 8888:8888 -e OPENAI_API_KEY=your_api_key manishaverma/my-flask-app:latest'
+'
             }
         }
     }
