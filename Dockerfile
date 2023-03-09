@@ -16,7 +16,9 @@ RUN pip install openai
 EXPOSE 88
 
 # Define environment variable
-ENV NAME World
+# ENV NAME World
+ENV OPENAI_API_KEY <your_api_key>
+
 
 # Run app.py when the container launches
 CMD ["python", "app.py"]
