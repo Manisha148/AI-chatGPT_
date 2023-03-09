@@ -5,7 +5,7 @@ import openai
 import os
 
 # openai.api_key = "sk-**********"
-openai.api_key_path='apikey'
+openai.api_key_path=''
 
 
 app = Flask(__name__)
